@@ -7,7 +7,8 @@ public class MemberFixture {
     public static final String MEMBER_JOIN_REQUEST_JSON = "{ \"email\" : \"email@gmail.com\"," +
             " \"nickName\" : \"닉네임\", \"password\" : \"dfeafnpe\" }";
 
-
+    public static final String TEST_EMAIL = "email@gmail.com";
+    public static final String TEST_NICKNAME = "닉네임";
 
     public static final Member MEMBER = new Member("email@gmail.com", "닉네임", "dfadfe2fdfoen");
 }

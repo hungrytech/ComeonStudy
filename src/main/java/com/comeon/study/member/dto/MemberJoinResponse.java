@@ -1,11 +1,12 @@
 package com.comeon.study.member.dto;
 
 import com.comeon.study.member.domain.Member;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberJoinResponse {
 
     private Long id;

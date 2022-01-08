@@ -1,12 +1,13 @@
 package com.comeon.study.member.dto;
 
 import com.comeon.study.member.domain.Member;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberJoinRequest {
 
     private String email;

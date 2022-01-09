@@ -4,7 +4,6 @@ import com.comeon.study.member.domain.Member;
 import com.comeon.study.member.domain.repository.MemberRepository;
 import com.comeon.study.member.dto.MemberJoinRequest;
 import com.comeon.study.member.dto.MemberJoinResponse;
-import com.comeon.study.member.fixture.MemberFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

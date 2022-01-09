@@ -1,5 +1,7 @@
 package com.comeon.study.member.presentation;
 
+import com.comeon.study.common.util.response.ApiResponse;
+import com.comeon.study.common.util.response.ApiResponseCreator;
 import com.comeon.study.member.application.MemberService;
 import com.comeon.study.member.dto.MemberJoinRequest;
 import com.comeon.study.member.dto.MemberJoinResponse;
@@ -21,10 +23,10 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/join")
-    public ResponseEntity<MemberJoinResponse> join(@Valid @RequestBody MemberJoinRequest memberJoinRequest) {
+    public ResponseEntity<ApiResponse<MemberJoinResponse>> join(@Valid @RequestBody MemberJoinRequest memberJoinRequest) {
         MemberJoinResponse memberJoinResponse = memberService.join(memberJoinRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(memberJoinResponse);
+                .body(ApiResponseCreator.createSuccessResponse(memberJoinResponse));
     }
 }

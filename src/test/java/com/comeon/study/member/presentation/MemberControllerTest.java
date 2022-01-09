@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import static com.comeon.study.member.fixture.MemberFixture.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,8 +30,10 @@ public class MemberControllerTest {
                 .content(MEMBER_JOIN_REQUEST_JSON));
 
         perform.andExpect(status().isCreated())
-                .andExpect(jsonPath("email").value(TEST_EMAIL))
-                .andExpect(jsonPath("nickName").value(TEST_NICKNAME));
+                .andDo(print())
+                .andExpect(jsonPath("success").value(true))
+                .andExpect(jsonPath("data.email").value(TEST_EMAIL))
+                .andExpect(jsonPath("data.nickName").value(TEST_NICKNAME));
     }
 
     @Test

@@ -33,4 +33,14 @@ public class MemberControllerTest {
                 .andExpect(jsonPath("nickName").value(TEST_NICKNAME));
     }
 
+    @Test
+    void 잘못된_이메일_입력시_회원가입_실패() throws Exception {
+        ResultActions perform = mockMvc.perform(post("/api/v1/join")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(INVALID_MEMBER_JOIN_REQUEST_JSON));
+
+        perform.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("success").value(false))
+                .andExpect(jsonPath("messages").value("잘못된 이메일 양식입니다."));
+    }
 }

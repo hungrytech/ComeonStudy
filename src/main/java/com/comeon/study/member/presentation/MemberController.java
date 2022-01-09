@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RequestMapping("/api/v1")
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/join")
-    public ResponseEntity<MemberJoinResponse> join(@RequestBody MemberJoinRequest memberJoinRequest) {
+    public ResponseEntity<MemberJoinResponse> join(@Valid @RequestBody MemberJoinRequest memberJoinRequest) {
         MemberJoinResponse memberJoinResponse = memberService.join(memberJoinRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED)

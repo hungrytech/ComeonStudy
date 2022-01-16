@@ -1,14 +1,12 @@
 package com.comeon.study.member.domain;
 
+import com.comeon.study.member.domain.role.Role;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Entity
@@ -25,12 +23,14 @@ public class Member {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Builder
     public Member(String email, String nickName, String password) {
         this.email = email;
         this.nickName = nickName;
         this.password = password;
+        this.role = Role.ACTIVITY;
     }
-
-
 }

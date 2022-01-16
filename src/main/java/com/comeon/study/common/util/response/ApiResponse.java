@@ -31,7 +31,7 @@ public class ApiResponse<T> {
     }
 
     private List<String> setMessages(List<String> messages) {
-        if (!Objects.isNull(messages) && messages.isEmpty()) {
+        if (!Objects.isNull(messages) && !messages.isEmpty()) {
             return Collections.unmodifiableList(messages);
         }
 

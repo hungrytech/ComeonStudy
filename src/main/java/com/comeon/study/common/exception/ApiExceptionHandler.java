@@ -15,7 +15,7 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ApiResponse<?>> handleApplicationErrorResponse(ApplicationException e) {
-        return ResponseEntity.badRequest()
+        return ResponseEntity.status(e.getHttpStatus())
                         .body(ApiResponseCreator.createErrorResponse(e.getMessage()));
     }
 

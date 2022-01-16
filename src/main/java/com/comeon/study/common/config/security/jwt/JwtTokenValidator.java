@@ -5,25 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Date;
 
 @Slf4j
 @Component
-public class JwtTokenValidator {
-
-    private String secretKey;
+public class JwtTokenValidator extends JwtTokenConfirmManager {
 
     public JwtTokenValidator(@Value("${jwt.secret-key}") String secretKey) {
-        this.secretKey = secretKey;
-    }
-
-    @PostConstruct
-    private void encodeSecretKey() {
-        secretKey = Base64.getEncoder()
-                .encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
+        super(secretKey);
     }
 
     public boolean validateAccessToken(String tokenWithHeader) {
@@ -45,10 +34,6 @@ public class JwtTokenValidator {
             log.info("유효한 토큰이 아님: {}", e.getMessage());
             return false;
         }
-    }
-
-    private String removeHeader(String tokenWithHeader) {
-        return tokenWithHeader.substring(AuthHeader.DECIDED_HEADER_NAME.length());
     }
 
     private Date getCurrentDate() {

@@ -6,29 +6,18 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Date;
 
 @Component
-public class JwtTokenProvider {
-
-    private String secretKey;
+public class JwtTokenProvider extends JwtTokenUtil {
 
     private final long expirationTime;
 
     public JwtTokenProvider(
             @Value("${jwt.secret-key}") String secretKey,
             @Value("${jwt.expiration-time}") long expirationTime) {
-        this.secretKey = secretKey;
+        super(secretKey);
         this.expirationTime = expirationTime;
-    }
-
-    @PostConstruct
-    private void encodeSecretKey() {
-        secretKey = Base64.getEncoder()
-                .encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateAccessToken(Long memberId, String memberEmail) {

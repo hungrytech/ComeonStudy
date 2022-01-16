@@ -14,8 +14,6 @@ import java.util.Date;
 @Component
 public class JwtTokenValidator {
 
-    private static final String DECIDED_HEADER_NAME = "Bearer ";
-
     private String secretKey;
 
     public JwtTokenValidator(@Value("${jwt.secret-key}") String secretKey) {
@@ -29,7 +27,7 @@ public class JwtTokenValidator {
     }
 
     public boolean validateAccessToken(String tokenWithHeader) {
-        if (!tokenWithHeader.startsWith(DECIDED_HEADER_NAME)) {
+        if (!tokenWithHeader.startsWith(AuthHeader.DECIDED_HEADER_NAME)) {
             return false;
         }
 
@@ -50,7 +48,7 @@ public class JwtTokenValidator {
     }
 
     private String removeHeader(String tokenWithHeader) {
-        return tokenWithHeader.substring(DECIDED_HEADER_NAME.length());
+        return tokenWithHeader.substring(AuthHeader.DECIDED_HEADER_NAME.length());
     }
 
     private Date getCurrentDate() {

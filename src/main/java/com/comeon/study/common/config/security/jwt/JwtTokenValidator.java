@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Slf4j
 @Component
@@ -16,6 +17,10 @@ public class JwtTokenValidator extends JwtTokenConfirmManager {
     }
 
     public boolean validateAccessToken(String tokenWithHeader) {
+        if (Objects.isNull(tokenWithHeader)) {
+            return false;
+        }
+
         if (!tokenWithHeader.startsWith(AuthHeader.DECIDED_HEADER_NAME)) {
             return false;
         }

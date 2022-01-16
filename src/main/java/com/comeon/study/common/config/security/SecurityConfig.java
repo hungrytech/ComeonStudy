@@ -1,9 +1,11 @@
 package com.comeon.study.common.config.security;
 
+import com.comeon.study.common.config.security.entrypoint.JwtAuthenticationEntrypoint;
 import com.comeon.study.common.config.security.filter.JwtAuthenticationFilter;
 import com.comeon.study.common.config.security.jwt.JwtTokenParser;
 import com.comeon.study.common.config.security.jwt.JwtTokenValidator;
 import com.comeon.study.common.config.security.service.JwtUserDetailService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -25,6 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtUserDetailService jwtUserDetailService;
 
+    private final ObjectMapper objectMapper;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -40,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .cors()
                     .disable()
                     .exceptionHandling()
+                    .authenticationEntryPoint(new JwtAuthenticationEntrypoint(objectMapper))
                 .and()
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -20,8 +20,8 @@ public class JwtTokenProvider extends JwtTokenUtil {
         this.expirationTime = expirationTime;
     }
 
-    public String generateAccessToken(Long memberId, String memberEmail) {
-        Claims claims = createClaims(memberId, memberEmail);
+    public String generateAccessToken(Long memberId) {
+        Claims claims = createClaims(memberId);
         Date date = new Date();
 
         return Jwts.builder()
@@ -32,7 +32,7 @@ public class JwtTokenProvider extends JwtTokenUtil {
                 .compact();
     }
 
-    private Claims createClaims(Long memberId, String memberEmail) {
+    private Claims createClaims(Long memberId) {
         Claims claims = Jwts.claims();
         claims.put("memberId", memberId);
 

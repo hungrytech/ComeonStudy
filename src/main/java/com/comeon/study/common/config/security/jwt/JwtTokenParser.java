@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenParser extends JwtTokenConfirmManager {
 
-    private String secretKey;
-
     public JwtTokenParser(@Value("${jwt.secret-key}") String secretKey) {
         super(secretKey);
     }

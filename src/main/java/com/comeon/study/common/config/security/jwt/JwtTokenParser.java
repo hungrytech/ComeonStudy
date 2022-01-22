@@ -12,13 +12,13 @@ public class JwtTokenParser extends JwtTokenConfirmManager {
         super(secretKey);
     }
 
-    public Long getAuthenticatedMemberId(String tokenWithHeader) {
+    public String getAuthenticatedMemberId(String tokenWithHeader) {
         final Claims claims = Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(removeHeader(tokenWithHeader))
                 .getBody();
 
-        return (Long) claims.get("memberId");
+        return String.valueOf(claims.get("memberId"));
     }
 
 }

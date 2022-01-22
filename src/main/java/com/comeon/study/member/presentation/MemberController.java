@@ -41,10 +41,4 @@ public class MemberController {
                 .body(ApiResponseCreator.createSuccessResponse(memberLoginResponse));
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<ApiResponse<String>> test(@AuthenticationPrincipal AccountContext accountContext) {
-        return ResponseEntity.ok()
-                .body(ApiResponseCreator.createSuccessResponse(accountContext.getUsername()));
-    }
-
 }

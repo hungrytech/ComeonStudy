@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Optional;
+
+import static com.comeon.study.member.fixture.MemberFixture.TEST_MEMBER_LOGIN_EMAIL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -34,6 +37,19 @@ class MemberRepositoryTest {
                 () -> assertThat(resultMember.getNickName()).isEqualTo(member.getNickName()),
                 () -> assertThat(resultMember.getPassword()).isEqualTo(member.getPassword())
         );
+    }
+
+    @Test
+    void 회원이메일을_이용한_회원찾기_성공() {
+        // given
+        String email = TEST_MEMBER_LOGIN_EMAIL;
+
+        // when
+        Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
+        Member member = memberOptional.get();
+
+        // then
+        assertThat(member.getEmail()).isEqualTo(email);
     }
 
 }

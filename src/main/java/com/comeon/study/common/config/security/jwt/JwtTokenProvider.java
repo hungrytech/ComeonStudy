@@ -54,4 +54,8 @@ public class JwtTokenProvider extends JwtTokenUtil {
 
         return claims;
     }
+
+    public long getRefreshTokenExpirationTime() {
+        return refreshTokenExpirationTime;
+    }
 }

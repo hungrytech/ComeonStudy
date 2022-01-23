@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
-import static com.comeon.study.member.fixture.MemberFixture.TEST_MEMBER_LOGIN_EMAIL;
+import static com.comeon.study.member.fixture.MemberFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -24,9 +24,9 @@ class MemberRepositoryTest {
     void 회원가입_성공() {
         // given
         Member member = Member.builder()
-                .email("email@gmail.com")
-                .nickName("닉네임")
-                .password("dnfeo22n2o42pnvd")
+                .email(TEST_EMAIL)
+                .nickName(TEST_NICKNAME)
+                .password(TEST_PASSWORD)
                 .build();
 
         // when

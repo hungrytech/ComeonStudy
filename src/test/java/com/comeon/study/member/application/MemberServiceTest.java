@@ -77,7 +77,7 @@ class MemberServiceTest {
     }
 
     @Test
-    void 회원가입_실패_이미_회원인_경우_예외가_발생한다() throws Exception {
+    void 회원가입_실패_이미_회원인_경우_예외가_발생한다() {
         // given
         MemberJoinRequest memberJoinRequest = MemberJoinRequest.builder()
                 .email(TEST_MEMBER_LOGIN_EMAIL)
@@ -92,7 +92,6 @@ class MemberServiceTest {
         assertThatThrownBy(() -> memberService.join(memberJoinRequest)).isInstanceOf(ExistingMemberException.class);
 
     }
-
 
     @Test
     void 로그인_성공() {

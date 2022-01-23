@@ -62,7 +62,7 @@ public class MemberControllerTest {
     }
 
     @Test
-    void 잘못된_이메일_입력시_회원가입_실패() throws Exception {
+    void 회원가입_실패_잘못된_이메일_입력시() throws Exception {
         ResultActions perform = mockMvc.perform(post("/api/v1/join")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(INVALID_MEMBER_JOIN_REQUEST_JSON));

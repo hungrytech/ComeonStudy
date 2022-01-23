@@ -41,7 +41,7 @@ public class MemberControllerTest {
     void 회원가입_성공() throws Exception {
         ResultActions perform = mockMvc.perform(post("/api/v1/join")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JOINED_TEST_MEMBER_JSON));
+                .content(MEMBER_JOIN_REQUEST_JSON));
 
         perform.andExpect(status().isCreated())
                 .andExpect(jsonPath("success").value(true))

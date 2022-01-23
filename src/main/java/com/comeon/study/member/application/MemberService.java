@@ -9,6 +9,7 @@ import com.comeon.study.member.dto.MemberJoinRequest;
 import com.comeon.study.member.dto.MemberJoinResponse;
 import com.comeon.study.member.dto.MemberLoginRequest;
 import com.comeon.study.member.dto.MemberLoginResponse;
+import com.comeon.study.member.exception.ExistingMemberException;
 import com.comeon.study.member.exception.NotMatchLoginValueException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +27,13 @@ public class MemberService {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+
     public MemberJoinResponse join(MemberJoinRequest memberJoinRequest) {
+        memberRepository.findMemberByEmail(memberJoinRequest.getEmail())
+                .ifPresent(member -> {
+                    throw new ExistingMemberException();
+                });
+
         Member savedMember = memberRepository.save(memberJoinRequest.toMember(passwordEncoder));
         return new MemberJoinResponse(savedMember);
     }

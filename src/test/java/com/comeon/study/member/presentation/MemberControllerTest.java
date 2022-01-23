@@ -41,13 +41,24 @@ public class MemberControllerTest {
     void 회원가입_성공() throws Exception {
         ResultActions perform = mockMvc.perform(post("/api/v1/join")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(MEMBER_JOIN_REQUEST_JSON));
+                .content(JOINED_TEST_MEMBER_JSON));
 
         perform.andExpect(status().isCreated())
-                .andDo(print())
                 .andExpect(jsonPath("success").value(true))
                 .andExpect(jsonPath("data.email").value(TEST_EMAIL))
                 .andExpect(jsonPath("data.nickName").value(TEST_NICKNAME));
+    }
+
+    @Test
+    void 회원가입_실패_이미_회원인_경우() throws Exception {
+        ResultActions perform = mockMvc.perform(post("/api/v1/join")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JOINED_TEST_MEMBER_JSON));
+
+        perform.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("success").value(false))
+                .andExpect(jsonPath("message").value("이미 가입된 회원입니다."));
+
     }
 
     @Test

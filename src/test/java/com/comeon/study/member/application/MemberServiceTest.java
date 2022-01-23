@@ -9,6 +9,7 @@ import com.comeon.study.member.dto.MemberJoinRequest;
 import com.comeon.study.member.dto.MemberJoinResponse;
 import com.comeon.study.member.dto.MemberLoginRequest;
 import com.comeon.study.member.dto.MemberLoginResponse;
+import com.comeon.study.member.exception.ExistingMemberException;
 import com.comeon.study.member.exception.NotMatchLoginValueException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,7 +58,11 @@ class MemberServiceTest {
     @Test
     void 회원가입_성공() {
         // given
-        MemberJoinRequest memberJoinRequest = new MemberJoinRequest();
+        MemberJoinRequest memberJoinRequest = MemberJoinRequest.builder()
+                .email(TEST_EMAIL)
+                .nickName(TEST_NICKNAME)
+                .password(TEST_PASSWORD)
+                .build();
 
         given(memberRepository.save(any(Member.class))).willReturn(MEMBER);
 
@@ -70,6 +75,24 @@ class MemberServiceTest {
                 () -> assertThat(memberJoinResponse.getNickName()).isEqualTo(MEMBER.getNickName())
         );
     }
+
+    @Test
+    void 회원가입_실패_이미_회원인_경우_예외가_발생한다() throws Exception {
+        // given
+        MemberJoinRequest memberJoinRequest = MemberJoinRequest.builder()
+                .email(TEST_MEMBER_LOGIN_EMAIL)
+                .nickName(TEST_MEMBER_LOGIN_NICKNAME)
+                .password(TEST_MEMBER_LOGIN_PASSWORD)
+                .build();
+
+        // when
+        given(memberRepository.findMemberByEmail(TEST_MEMBER_LOGIN_EMAIL)).willReturn(Optional.of(TEST_LOGIN_MEMBER));
+
+        // then
+        assertThatThrownBy(() -> memberService.join(memberJoinRequest)).isInstanceOf(ExistingMemberException.class);
+
+    }
+
 
     @Test
     void 로그인_성공() {

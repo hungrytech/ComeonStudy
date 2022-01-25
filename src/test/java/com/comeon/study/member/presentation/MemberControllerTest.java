@@ -1,52 +1,31 @@
 package com.comeon.study.member.presentation;
 
-import org.junit.jupiter.api.BeforeEach;
+import com.comeon.study.common.ControllerTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static com.comeon.study.member.fixture.MemberFixture.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class MemberControllerTest {
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    private MockMvc mockMvc;
-
-    @BeforeEach
-    void setMockMvc() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .addFilter(new CharacterEncodingFilter("UTF-8", true))
-                .alwaysDo(print())
-                .build();
-    }
+public class MemberControllerTest extends ControllerTest {
 
     @Test
     void 회원가입_성공() throws Exception {
+        // given
         ResultActions perform = mockMvc.perform(post("/api/v1/join")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(MEMBER_JOIN_REQUEST_JSON));
 
-        perform.andExpect(status().isCreated())
-                .andExpect(jsonPath("success").value(true))
-                .andExpect(jsonPath("data.email").value(TEST_EMAIL))
-                .andExpect(jsonPath("data.nickName").value(TEST_NICKNAME));
+        perform.andExpect(status().isCreated());
     }
 
     @Test

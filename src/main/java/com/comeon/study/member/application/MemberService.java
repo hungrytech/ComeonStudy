@@ -6,7 +6,6 @@ import com.comeon.study.member.domain.Member;
 import com.comeon.study.member.domain.repository.MemberRepository;
 import com.comeon.study.member.domain.repository.RefreshTokenRepository;
 import com.comeon.study.member.dto.MemberJoinRequest;
-import com.comeon.study.member.dto.MemberJoinResponse;
 import com.comeon.study.member.dto.MemberLoginRequest;
 import com.comeon.study.member.dto.MemberLoginResponse;
 import com.comeon.study.member.exception.ExistingMemberException;
@@ -14,6 +13,7 @@ import com.comeon.study.member.exception.NotMatchLoginValueException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,16 +28,17 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
 
 
-    public MemberJoinResponse join(MemberJoinRequest memberJoinRequest) {
+    @Transactional
+    public void join(MemberJoinRequest memberJoinRequest) {
         memberRepository.findMemberByEmail(memberJoinRequest.getEmail())
                 .ifPresent(member -> {
                     throw new ExistingMemberException();
                 });
 
-        Member savedMember = memberRepository.save(memberJoinRequest.toMember(passwordEncoder));
-        return new MemberJoinResponse(savedMember);
+        memberRepository.save(memberJoinRequest.toMember(passwordEncoder));
     }
 
+    @Transactional(readOnly = true)
     public MemberLoginResponse signIn(MemberLoginRequest memberLoginRequest) {
         Member member = memberRepository.findMemberByEmail(memberLoginRequest.getEmail())
                 .orElseThrow(NotMatchLoginValueException::new);

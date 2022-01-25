@@ -10,6 +10,13 @@ public class ApiResponseCreator {
         throw new NotInstanceException();
     }
 
+    public static ApiResponse<?> createSuccessResponse() {
+        return ApiResponse.builder()
+                .success(true)
+                .data(null)
+                .build();
+    }
+
     public static <T> ApiResponse<T> createSuccessResponse(T data) {
         return ApiResponse.<T>builder()
                 .success(true)

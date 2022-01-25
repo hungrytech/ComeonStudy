@@ -1,10 +1,10 @@
 package com.comeon.study.member.application;
 
 import com.comeon.study.common.config.security.jwt.JwtTokenProvider;
-import com.comeon.study.member.domain.refreshtoken.RefreshToken;
+import com.comeon.study.common.config.security.refreshtoken.RefreshToken;
 import com.comeon.study.member.domain.Member;
 import com.comeon.study.member.domain.repository.MemberRepository;
-import com.comeon.study.member.domain.repository.RefreshTokenRepository;
+import com.comeon.study.common.config.security.refreshtoken.repository.RefreshTokenRepository;
 import com.comeon.study.member.dto.MemberJoinRequest;
 import com.comeon.study.member.dto.MemberLoginRequest;
 import com.comeon.study.member.dto.MemberLoginResponse;

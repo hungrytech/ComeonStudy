@@ -1,6 +1,6 @@
 package com.comeon.study.common.config.security.service;
 
-import com.comeon.study.common.config.security.service.accountcontext.AccountContext;
+import com.comeon.study.common.config.security.accountcontext.AccountContext;
 import com.comeon.study.member.domain.Member;
 import com.comeon.study.member.domain.repository.MemberRepository;
 import com.comeon.study.member.exception.NotFoundMemberException;

@@ -1,6 +1,6 @@
 package com.comeon.study.member.fixture;
 
-import com.comeon.study.member.domain.refreshtoken.RefreshToken;
+import com.comeon.study.common.config.security.refreshtoken.RefreshToken;
 
 public class RefreshTokenFixture {
 

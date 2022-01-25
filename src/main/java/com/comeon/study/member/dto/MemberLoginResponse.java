@@ -1,6 +1,6 @@
 package com.comeon.study.member.dto;
 
-import com.comeon.study.member.domain.refreshtoken.RefreshToken;
+import com.comeon.study.common.config.security.refreshtoken.RefreshToken;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

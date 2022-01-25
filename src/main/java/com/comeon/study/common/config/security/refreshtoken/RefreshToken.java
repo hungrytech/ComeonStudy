@@ -1,4 +1,4 @@
-package com.comeon.study.member.domain.refreshtoken;
+package com.comeon.study.common.config.security.refreshtoken;
 
 import lombok.AccessLevel;
 import lombok.Getter;

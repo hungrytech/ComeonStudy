@@ -38,7 +38,7 @@ public class MemberService {
         memberRepository.save(memberJoinRequest.toMember(passwordEncoder));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public MemberLoginResponse signIn(MemberLoginRequest memberLoginRequest) {
         Member member = memberRepository.findMemberByEmail(memberLoginRequest.getEmail())
                 .orElseThrow(NotMatchLoginValueException::new);

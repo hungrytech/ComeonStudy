@@ -22,11 +22,11 @@ public class LoginAcceptanceTest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .body(MEMBER_JOIN_REQUEST_JSON)
 
-                // when
+        // when
                 .when()
                 .post("/api/v1/join")
 
-                // then
+        // then
                 .then()
                 .statusCode(HttpStatus.CREATED.value());
     }
@@ -38,11 +38,11 @@ public class LoginAcceptanceTest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .body(JOINED_TEST_MEMBER_JSON)
 
-                // when
+        // when
                 .when()
                 .post("/api/v1/join")
 
-                // then
+        // then
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .assertThat()
@@ -57,11 +57,11 @@ public class LoginAcceptanceTest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .body(INVALID_MEMBER_JOIN_REQUEST_JSON)
 
-                // when
+        // when
                 .when()
                 .post("/api/v1/join")
 
-                // then
+        // then
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .assertThat()
@@ -75,8 +75,7 @@ public class LoginAcceptanceTest extends AcceptanceTest {
         given()
                 .contentType(ContentType.JSON)
                 .body(LOGIN_REQUEST_JSON)
-
-                // when
+        // when
                 .when()
                 .post("/api/v1/login")
 
@@ -87,6 +86,44 @@ public class LoginAcceptanceTest extends AcceptanceTest {
                 .body("data.nickName", equalTo(TEST_MEMBER_LOGIN_NICKNAME))
                 .body("data.accessToken", notNullValue())
                 .body("data.refreshToken", notNullValue());
+    }
+
+    @Test
+    void 로그인_실패_비밀번호가_다를경우() {
+        // given
+        given()
+                .contentType(ContentType.JSON)
+                .body(LOGIN_PASSWORD_FAILED_MEMBER_REQUEST_JSON)
+
+        // when
+                .when()
+                .post("/api/v1/login")
+
+        // then
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .assertThat()
+                .body("success", equalTo(false))
+                .body("message", equalTo("아이디 혹은 비밀번호가 잘못되었습니다."));
+    }
+
+    @Test
+    void 로그인_실패_아이디가_다를경우() {
+        // given
+        given()
+                .contentType(ContentType.JSON)
+                .body(LOGIN_ID_FAILED_MEMBER_REQUEST_JSON)
+
+        // when
+                .when()
+                .post("/api/v1/login")
+
+        // then
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .assertThat()
+                .body("success", equalTo(false))
+                .body("message", equalTo("아이디 혹은 비밀번호가 잘못되었습니다."));
     }
 
 }

@@ -14,6 +14,8 @@ public class MemberFixture {
             " \"nickName\" : \"닉네임\", \"password\" : \"dfeafnpe\" }";
 
     public static final String LOGIN_REQUEST_JSON = "{ \"email\" : \"test@gmail.com\", \"password\" : \"abcd1234\" }";
+    public static final String LOGIN_PASSWORD_FAILED_MEMBER_REQUEST_JSON = "{ \"email\" : \"test@gmail.com\", \"password\" : \"failedPassword\" }";
+    public static final String LOGIN_ID_FAILED_MEMBER_REQUEST_JSON = "{ \"email\" : \"faild@gmail.com\", \"password\" : \"abcd1234\" }";
 
     public static final String TEST_EMAIL = "email@gmail.com";
     public static final String TEST_NICKNAME = "닉네임";

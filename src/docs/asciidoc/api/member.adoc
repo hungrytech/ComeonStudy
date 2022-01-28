@@ -1,0 +1,41 @@
+ifndef::snippets[]
+:snippets: {docdir}/build/generated-snippets
+endif::[]
+
+== #*_MEMBER API_*#
+=== *회원 가입 [post]*
+
+==== 설명
+회원 정보를 등록한다.
+
+==== Request 필드
+include::{snippets}/user/request-fields.adoc[]
+
+==== Request 예시
+include::{snippets}/user/http-request.adoc[]
+
+==== Response 필드
+include::{snippets}/user/response-fields.adoc[]
+
+==== Response 예시
+include::{snippets}/user/http-response.adoc[]
+
+=== *로그인 [post]*
+
+==== 설명
+등록된 회원 정보로 로그인한다.
+
+==== Request 필드
+include::{snippets}/login/request-fields.adoc[]
+
+==== Request 예시
+include::{snippets}/login/http-request.adoc[]
+
+==== Response 필드
+include::{snippets}/login/response-fields.adoc[]
+
+==== Response 예시
+include::{snippets}/login/http-response.adoc[]
+
+
+'''

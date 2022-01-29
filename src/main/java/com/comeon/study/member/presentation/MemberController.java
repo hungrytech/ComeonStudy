@@ -1,5 +1,6 @@
 package com.comeon.study.member.presentation;
 
+import com.comeon.study.common.config.security.jwt.JwtTokenProvider;
 import com.comeon.study.common.util.response.ApiResponse;
 import com.comeon.study.common.util.response.ApiResponseCreator;
 import com.comeon.study.member.application.MemberService;
@@ -8,6 +9,7 @@ import com.comeon.study.member.dto.MemberLoginRequest;
 import com.comeon.study.member.dto.MemberLoginResponse;
 import com.comeon.study.member.dto.ReIssuanceTokenResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,11 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    private final JwtTokenProvider jwtTokenProvider;
+
+    @Value("${cookie.properties.domain}")
+    private String cookieDomainValue;
+
     @PostMapping("/join")
     public ResponseEntity<ApiResponse<?>> join(@Valid @RequestBody MemberJoinRequest memberJoinRequest) {
         memberService.join(memberJoinRequest);
@@ -42,7 +49,9 @@ public class MemberController {
 
         MemberLoginResponse memberLoginResponse = memberService.signIn(memberLoginRequest);
 
-        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(memberLoginResponse.getRefreshToken());
+        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(
+                memberLoginResponse.getRefreshToken(),
+                jwtTokenProvider.getRefreshTokenExpirationTime());
         response.addHeader(SET_COOKIE, refreshTokenCookie.toString());
         return ResponseEntity.ok()
                 .body(ApiResponseCreator.createSuccessResponse(memberLoginResponse.getAccessToken()));
@@ -51,24 +60,28 @@ public class MemberController {
     //TODO: 테스트코드 작성 고민
     @PostMapping("/refresh")
     public ResponseEntity<ApiResponse<String>> reIssuanceToken(
-            @CookieValue(REFRESH_TOKEN_COOKIE_NAME) String refreshToken,
+            @CookieValue(value = REFRESH_TOKEN_COOKIE_NAME, required = false) String refreshToken,
             HttpServletResponse response) {
 
         ReIssuanceTokenResponse reIssuanceTokenResponse = memberService
                 .reIssuanceAccessTokenAndRefreshToken(refreshToken);
 
-        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(reIssuanceTokenResponse.getRefreshToken());
+        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(
+                reIssuanceTokenResponse.getRefreshToken(),
+                jwtTokenProvider.getRefreshTokenExpirationTime());
         response.addHeader(SET_COOKIE, refreshTokenCookie.toString());
         return ResponseEntity.ok()
                 .body(ApiResponseCreator.createSuccessResponse(reIssuanceTokenResponse.getAccessToken()));
     }
 
-    private ResponseCookie createRefreshTokenCookie(String refreshToken) {
+    private ResponseCookie createRefreshTokenCookie(String refreshToken, Long expiredRefreshToken) {
         return ResponseCookie.from(REFRESH_TOKEN_COOKIE_NAME, refreshToken)
                 .sameSite("Lax")
                 .secure(true)
                 .httpOnly(true)
                 .path("/")
+                .maxAge(expiredRefreshToken)
+                .domain(cookieDomainValue)
                 .build();
     }
 }

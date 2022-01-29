@@ -1,5 +1,6 @@
 package com.comeon.study.member.application;
 
+import com.comeon.study.common.config.security.jwt.JwtTokenParser;
 import com.comeon.study.common.config.security.jwt.JwtTokenProvider;
 import com.comeon.study.common.config.security.refreshtoken.RefreshToken;
 import com.comeon.study.member.domain.Member;
@@ -8,8 +9,11 @@ import com.comeon.study.common.config.security.refreshtoken.repository.RefreshTo
 import com.comeon.study.member.dto.MemberJoinRequest;
 import com.comeon.study.member.dto.MemberLoginRequest;
 import com.comeon.study.member.dto.MemberLoginResponse;
+import com.comeon.study.member.dto.ReIssuanceTokenResponse;
 import com.comeon.study.member.exception.ExistingMemberException;
+import com.comeon.study.member.exception.NotFoundOrExpiredRefreshTokenException;
 import com.comeon.study.member.exception.NotMatchLoginValueException;
+import com.comeon.study.member.exception.NotMatchRefreshTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +31,7 @@ public class MemberService {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    private final JwtTokenParser jwtTokenParser;
 
     @Transactional
     public void join(MemberJoinRequest memberJoinRequest) {
@@ -54,5 +59,29 @@ public class MemberService {
                 jwtTokenProvider.getRefreshTokenExpirationTime()));
 
         return new MemberLoginResponse(member.getNickName(), accessToken, refreshToken);
+    }
+
+    @Transactional
+    public ReIssuanceTokenResponse reIssuanceAccessTokenAndRefreshToken(String refreshToken) {
+        String memberId = jwtTokenParser.getAuthenticatedMemberIdFromRefreshToken(refreshToken);
+
+        RefreshToken existingRefreshToken = refreshTokenRepository.findById(refreshToken)
+                .orElseThrow(NotFoundOrExpiredRefreshTokenException::new);
+
+        //같냐?
+        if (!existingRefreshToken.isSame(refreshToken)) {
+            throw new NotMatchRefreshTokenException();
+        }
+
+        refreshTokenRepository.delete(existingRefreshToken);
+
+        RefreshToken reIssuanceRefreshToken = refreshTokenRepository.save(RefreshToken.of(
+                jwtTokenProvider.generateRefreshToken(Long.parseLong(memberId)),
+                jwtTokenProvider.getRefreshTokenExpirationTime()
+        ));
+
+        return new ReIssuanceTokenResponse(
+                jwtTokenProvider.generateAccessToken(Long.parseLong(memberId)),
+                reIssuanceRefreshToken.getValue());
     }
 }

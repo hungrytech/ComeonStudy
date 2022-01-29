@@ -16,7 +16,7 @@ public class RefreshToken {
     private String value;
 
     @TimeToLive
-    private  long expiration;
+    private long expiration;
 
     private RefreshToken(String value, long expiration) {
         this.value = value;
@@ -25,5 +25,9 @@ public class RefreshToken {
 
     public static RefreshToken of(String value, long expiration) {
         return new RefreshToken(value, expiration);
+    }
+
+    public boolean isSame(String targetTokenValue) {
+        return value.equals(targetTokenValue);
     }
 }

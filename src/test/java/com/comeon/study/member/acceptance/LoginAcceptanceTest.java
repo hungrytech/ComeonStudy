@@ -149,4 +149,13 @@ public class LoginAcceptanceTest extends AcceptanceTest {
                 .body("message", equalTo("아이디 혹은 비밀번호가 잘못되었습니다."));
     }
 
+    @Test
+    void test() {
+        // given
+
+        // when
+
+        // then
+    }
+
 }

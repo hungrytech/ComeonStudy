@@ -6,20 +6,24 @@ import com.comeon.study.member.application.MemberService;
 import com.comeon.study.member.dto.MemberJoinRequest;
 import com.comeon.study.member.dto.MemberLoginRequest;
 import com.comeon.study.member.dto.MemberLoginResponse;
+import com.comeon.study.member.dto.ReIssuanceTokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RequestMapping("/api/v1")
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
+
+    private static final String SET_COOKIE = "Set-Cookie";
+
+    private static final String REFRESH_TOKEN_COOKIE_NAME = "STUDY_REFRESH";
 
     private final MemberService memberService;
 
@@ -41,4 +45,27 @@ public class MemberController {
                 .body(ApiResponseCreator.createSuccessResponse(memberLoginResponse));
     }
 
+    //TODO: 테스트코드 작성 고민
+    @PostMapping("/refresh")
+    public ResponseEntity<ApiResponse<String>> reIssuanceToken(
+            @CookieValue(REFRESH_TOKEN_COOKIE_NAME) String refreshToken,
+            HttpServletResponse response) {
+
+        ReIssuanceTokenResponse reIssuanceTokenResponse = memberService
+                .reIssuanceAccessTokenAndRefreshToken(refreshToken);
+
+        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(reIssuanceTokenResponse.getRefreshToken());
+        response.addHeader(SET_COOKIE, refreshTokenCookie.toString());
+        return ResponseEntity.ok()
+                .body(ApiResponseCreator.createSuccessResponse(reIssuanceTokenResponse.getAccessToken()));
+    }
+
+    private ResponseCookie createRefreshTokenCookie(String refreshToken) {
+        return ResponseCookie.from(REFRESH_TOKEN_COOKIE_NAME, refreshToken)
+                .sameSite("Lax")
+                .secure(true)
+                .httpOnly(true)
+                .path("/")
+                .build();
+    }
 }

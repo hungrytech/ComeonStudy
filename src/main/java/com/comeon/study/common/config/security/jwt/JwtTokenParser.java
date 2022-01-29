@@ -12,10 +12,19 @@ public class JwtTokenParser extends JwtTokenConfirmManager {
         super(secretKey);
     }
 
-    public String getAuthenticatedMemberId(String tokenWithHeader) {
-        final Claims claims = Jwts.parser()
+    public String getAuthenticatedMemberIdFromAccessToken(String tokenWithHeader) {
+        Claims claims = Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(removeHeader(tokenWithHeader))
+                .getBody();
+
+        return String.valueOf(claims.get("memberId"));
+    }
+
+    public String getAuthenticatedMemberIdFromRefreshToken(String refreshToken) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(refreshToken)
                 .getBody();
 
         return String.valueOf(claims.get("memberId"));

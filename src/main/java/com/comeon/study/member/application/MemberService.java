@@ -58,7 +58,7 @@ public class MemberService {
                 jwtTokenProvider.generateRefreshToken(member.getId()),
                 jwtTokenProvider.getRefreshTokenExpirationTime()));
 
-        return new MemberLoginResponse(member.getNickName(), accessToken, refreshToken);
+        return new MemberLoginResponse(accessToken, refreshToken);
     }
 
     @Transactional

@@ -9,14 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberLoginResponse {
 
-    private String nickName;
-
     private String accessToken;
 
     private String refreshToken;
 
-    public MemberLoginResponse(String nickName, String accessToken, RefreshToken refreshToken) {
-        this.nickName = nickName;
+    public MemberLoginResponse(String accessToken, RefreshToken refreshToken) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken.getValue();
     }

@@ -89,13 +89,9 @@ public class LoginAcceptanceTest extends AcceptanceTest {
                 )))
                 .filter(document("login", responseFields(
                         fieldWithPath("success").description("api 성공여부"),
-                        fieldWithPath("data").description("api 호출 결과 데이터"),
-                        fieldWithPath("data.nickName").description("닉네임"),
-                        fieldWithPath("data.accessToken").description("accessToken"),
-                        fieldWithPath("data.refreshToken").description("refreshToken"),
+                        fieldWithPath("data").description("accessToken"),
                         fieldWithPath("message").description("에러메세지"),
                         fieldWithPath("messages").description("유효성검사 에러 메시지")
-
                 )))
 
         // when
@@ -106,9 +102,8 @@ public class LoginAcceptanceTest extends AcceptanceTest {
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .assertThat()
-                .body("data.nickName", equalTo(TEST_MEMBER_LOGIN_NICKNAME))
-                .body("data.accessToken", notNullValue())
-                .body("data.refreshToken", notNullValue());
+                .cookie("STUDY_REFRESH", notNullValue())
+                .body("data", notNullValue());
     }
 
     @Test
@@ -147,15 +142,6 @@ public class LoginAcceptanceTest extends AcceptanceTest {
                 .assertThat()
                 .body("success", equalTo(false))
                 .body("message", equalTo("아이디 혹은 비밀번호가 잘못되었습니다."));
-    }
-
-    @Test
-    void test() {
-        // given
-
-        // when
-
-        // then
     }
 
 }

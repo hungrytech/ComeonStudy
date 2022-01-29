@@ -36,13 +36,16 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<MemberLoginResponse>> signIn(
-            @Valid @RequestBody MemberLoginRequest memberLoginRequest) {
+    public ResponseEntity<ApiResponse<String>> signIn(
+            @Valid @RequestBody MemberLoginRequest memberLoginRequest,
+            HttpServletResponse response) {
 
         MemberLoginResponse memberLoginResponse = memberService.signIn(memberLoginRequest);
 
+        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(memberLoginResponse.getRefreshToken());
+        response.addHeader(SET_COOKIE, refreshTokenCookie.toString());
         return ResponseEntity.ok()
-                .body(ApiResponseCreator.createSuccessResponse(memberLoginResponse));
+                .body(ApiResponseCreator.createSuccessResponse(memberLoginResponse.getAccessToken()));
     }
 
     //TODO: 테스트코드 작성 고민

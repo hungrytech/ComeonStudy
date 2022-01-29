@@ -81,6 +81,7 @@ class MemberServiceTest {
         // given
         MemberLoginRequest memberLoginRequest = new MemberLoginRequest(TEST_MEMBER_LOGIN_EMAIL, TEST_MEMBER_LOGIN_PASSWORD);
         given(memberRepository.findMemberByEmail(anyString())).willReturn(Optional.of(TEST_LOGIN_MEMBER));
+        given(jwtTokenProvider.generateAccessToken(any())).willReturn(TEST_ACCESS_TOKEN);
         given(passwordEncoder.matches(anyString(), anyString())).willReturn(true);
         given(refreshTokenRepository.save(any(RefreshToken.class))).willReturn(TEST_REFRESH_TOKEN);
 
@@ -89,7 +90,7 @@ class MemberServiceTest {
 
         // then
         assertAll(
-                () -> assertThat(memberLoginResponse.getNickName()).isEqualTo(TEST_MEMBER_LOGIN_NICKNAME),
+                () -> assertThat(memberLoginResponse.getAccessToken()).isEqualTo(TEST_ACCESS_TOKEN),
                 () -> assertThat(memberLoginResponse.getRefreshToken()).isEqualTo(TEST_REFRESH_TOKEN.getValue())
         );
     }

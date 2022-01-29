@@ -8,6 +8,7 @@ public class TokenFixture {
 
     public static final String RE_ISSUANCE_ACCESS_TOKEN = "re_issuance_access_token";
 
+    public static final String TEST_ACCESS_TOKEN = "access_token";
     public static final RefreshToken TEST_REFRESH_TOKEN = RefreshToken.of("refresh_token", 1800000);
 
     public static final RefreshToken RE_ISSUANCE_REFRESH_TOKEN = RefreshToken.of("re_issuance_refresh_token", 1800000);

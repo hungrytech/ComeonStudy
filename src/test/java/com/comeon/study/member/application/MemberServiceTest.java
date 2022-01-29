@@ -61,11 +61,10 @@ class MemberServiceTest {
                 .nickName(TEST_MEMBER_LOGIN_NICKNAME)
                 .password(TEST_MEMBER_LOGIN_PASSWORD)
                 .build();
-
-        // when
+        
         given(memberRepository.findMemberByEmail(TEST_MEMBER_LOGIN_EMAIL)).willReturn(Optional.of(TEST_LOGIN_MEMBER));
 
-        // then
+        // when
         assertThatThrownBy(() -> memberService.join(memberJoinRequest)).isInstanceOf(ExistingMemberException.class);
 
     }
@@ -92,11 +91,9 @@ class MemberServiceTest {
     void 로그인_실패_찾는_회원이_없는경우() {
         // given
         MemberLoginRequest memberLoginRequest = new MemberLoginRequest(TEST_MEMBER_LOGIN_EMAIL, TEST_MEMBER_LOGIN_PASSWORD);
-
-        // when
         given(memberRepository.findMemberByEmail(anyString())).willReturn(Optional.empty());
 
-        // then
+        // when
         assertThatThrownBy(() -> memberService.signIn(memberLoginRequest))
                 .isInstanceOf(NotMatchLoginValueException.class);
 
@@ -106,12 +103,10 @@ class MemberServiceTest {
     void 로그인_실패_비밀번호가_다를경우() {
         // given
         MemberLoginRequest memberLoginRequest = new MemberLoginRequest(TEST_MEMBER_LOGIN_EMAIL, TEST_MEMBER_LOGIN_PASSWORD);
-
-        // when
         given(memberRepository.findMemberByEmail(anyString())).willReturn(Optional.of(TEST_LOGIN_MEMBER));
         given(passwordEncoder.matches(anyString(), anyString())).willReturn(false);
 
-        // then
+        // when
         assertThatThrownBy(() -> memberService.signIn(memberLoginRequest))
                 .isInstanceOf(NotMatchLoginValueException.class);
     }

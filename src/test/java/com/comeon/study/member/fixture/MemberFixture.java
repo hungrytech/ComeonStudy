@@ -28,7 +28,7 @@ public class MemberFixture {
     public static final String TEST_NICKNAME = "닉네임";
     public static final String TEST_PASSWORD = "dfadfe2fdfoen";
 
-    public static final String TEST_MEMBER_LOGIN_EMAIL = "test@gmail.com";
+    public static final String TEST_MEMBER_LOGIN_EMAIL = "test1@gmail.com";
     public static final String TEST_MEMBER_LOGIN_PASSWORD = "abcd1234";
     public static final String TEST_MEMBER_LOGIN_NICKNAME = "테스터1";
 

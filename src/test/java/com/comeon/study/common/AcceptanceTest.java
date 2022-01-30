@@ -15,15 +15,17 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.restassured3.RestAssuredRestDocumentation;
 import org.springframework.restdocs.restassured3.RestDocumentationFilter;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 @Import(TestConfig.class)
-@ExtendWith(RestDocumentationExtension.class)
+@ExtendWith({RestDocumentationExtension.class})
 @AutoConfigureRestDocs(uriHost = "docs.api.com")
 @ActiveProfiles("test")
+@Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AcceptanceTest {
 

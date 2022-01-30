@@ -28,12 +28,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                         fieldWithPath("email").description("이메일"),
                         fieldWithPath("password").description("비밀번호")
                 )))
-                .filter(document("login", responseFields(
-                        fieldWithPath("success").description("api 성공여부"),
-                        fieldWithPath("data").description("accessToken"),
-                        fieldWithPath("message").type(JsonFieldType.NULL).description("에러메세지").optional(),
-                        fieldWithPath("messages").type(JsonFieldType.NULL).description("유효성검사 에러 메시지").optional()
-                )))
+                .filter(getDefaultSuccessResponseDocument("login"))
 
         // when
                 .when()

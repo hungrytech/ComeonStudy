@@ -15,8 +15,8 @@ endif::[]
 == 소개
 Study API 문서 입니다.
 
-=== *Common Response*
-공통 응답
+=== *Success Response*
+성공 응답
 |===
 |필드명|타입|설명
 
@@ -28,14 +28,21 @@ Study API 문서 입니다.
 |`+반환값에 따라 다름+`
 |API 응답 결과 리턴
 
+|===
+
+=== *Fail Response*
+실패 응답
+|===
+|필드명|타입|설명
+
 |`+message+`
 |`+String+`
 |응답, 에러 메세지
 
 
-|`+messages+`
+|`+invalidMessages+`
 |`+String+`
-|바인딩 에러 메세지
+|값 유효성 에러 메시지
 |===
 
 [[rest_api_doc]]

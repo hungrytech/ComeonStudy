@@ -1,6 +1,6 @@
 package com.comeon.study.common;
 
-import com.comeon.study.common.util.response.ApiResponse;
+import com.comeon.study.common.util.response.ApiSuccessResponse;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
@@ -46,12 +46,19 @@ public class AcceptanceTest {
 
     }
 
-    protected RestDocumentationFilter getDefaultResponseDocument(String identifier) {
+    protected RestDocumentationFilter getDefaultSuccessResponseDocument(String identifier) {
         return document(identifier, responseFields(
                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("api 성공여부"),
-                fieldWithPath("data").type(JsonFieldType.NULL).description("api 호출 결과 데이터"),
-                fieldWithPath("message").type(JsonFieldType.NULL).description("에러메세지").optional(),
-                fieldWithPath("messages").type(JsonFieldType.NULL).description("유효성검사 에러 메시지").optional()
+                fieldWithPath("data").description("api 호출 결과 데이터").optional(),
+                fieldWithPath("message").type(JsonFieldType.NULL).description("성공시 전달 메세지").optional()
+        ));
+    }
+
+    protected RestDocumentationFilter getDefaultFailResponseDocument(String identifier) {
+        return document(identifier, responseFields(
+                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("api 성공여부"),
+                fieldWithPath("message").type(JsonFieldType.STRING).description("실패시 전달 메세지").optional(),
+                fieldWithPath("invalidMessages").type(JsonFieldType.ARRAY).description("값 유효성 에러 메시지").optional()
         ));
     }
 
@@ -61,11 +68,11 @@ public class AcceptanceTest {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(LOGIN_MEMBER_2_REQUEST_JSON, httpHeaders);
-        ResponseEntity<ApiResponse<String>> exchange = restTemplate.exchange(
+        ResponseEntity<ApiSuccessResponse<String>> exchange = restTemplate.exchange(
                 "http://localhost:" + port + "/api/v1/login",
                 HttpMethod.POST,
                 httpEntity, new ParameterizedTypeReference<>() {});
-        ApiResponse<String> apiResponse = exchange.getBody();
-        return "Bearer " + apiResponse.getData();
+        ApiSuccessResponse<String> apiSuccessResponse = exchange.getBody();
+        return "Bearer " + apiSuccessResponse.getData();
     }
 }

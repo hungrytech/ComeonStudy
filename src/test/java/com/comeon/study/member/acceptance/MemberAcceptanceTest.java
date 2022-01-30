@@ -30,7 +30,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
                         fieldWithPath("nickName").description("닉네임"),
                         fieldWithPath("password").description("비밀번호")
                 )))
-                .filter(getDefaultResponseDocument("user"))
+                .filter(getDefaultSuccessResponseDocument("user"))
 
                 // when
                 .when()
@@ -78,7 +78,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .assertThat()
                 .body("success", equalTo(false))
-                .body("messages", equalTo(List.of("잘못된 이메일 양식입니다.")));
+                .body("invalidMessages", equalTo(List.of("잘못된 이메일 양식입니다.")));
     }
 
     @DisplayName("닉네임 변경 - 성공")

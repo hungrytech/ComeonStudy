@@ -1,8 +1,8 @@
 package com.comeon.study.member.presentation;
 
 import com.comeon.study.auth.accountcontext.AccountContext;
-import com.comeon.study.common.util.response.ApiResponse;
-import com.comeon.study.common.util.response.ApiResponseCreator;
+import com.comeon.study.common.util.response.ApiSuccessResponse;
+import com.comeon.study.common.util.response.ApiResponseFactory;
 import com.comeon.study.member.application.MemberService;
 import com.comeon.study.member.dto.MemberJoinRequest;
 import com.comeon.study.member.dto.NickNameUpdateRequest;
@@ -22,21 +22,21 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/join")
-    public ResponseEntity<ApiResponse<?>> join(@Valid @RequestBody MemberJoinRequest memberJoinRequest) {
+    public ResponseEntity<ApiSuccessResponse<?>> join(@Valid @RequestBody MemberJoinRequest memberJoinRequest) {
         memberService.join(memberJoinRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponseCreator.createSuccessResponse());
+                .body(ApiResponseFactory.createSuccessResponse());
     }
 
     @PatchMapping("/members/nick-name")
-    public ResponseEntity<ApiResponse<?>> updateNickName(
+    public ResponseEntity<ApiSuccessResponse<?>> updateNickName(
             @AuthenticationPrincipal AccountContext accountContext,
             @RequestBody NickNameUpdateRequest nickNameUpdateRequest) {
         memberService.updateNickName(accountContext.getMemberId(), nickNameUpdateRequest);
 
         return ResponseEntity.ok()
-                .body(ApiResponseCreator.createSuccessResponse(null, "닉네임이 변경되었습니다."));
+                .body(ApiResponseFactory.createSuccessResponse(null, "닉네임이 변경되었습니다."));
     }
 
 }

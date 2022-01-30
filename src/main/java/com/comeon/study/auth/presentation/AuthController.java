@@ -2,8 +2,8 @@ package com.comeon.study.auth.presentation;
 
 import com.comeon.study.auth.application.AuthService;
 import com.comeon.study.auth.jwt.JwtTokenProvider;
-import com.comeon.study.common.util.response.ApiResponse;
-import com.comeon.study.common.util.response.ApiResponseCreator;
+import com.comeon.study.common.util.response.ApiSuccessResponse;
+import com.comeon.study.common.util.response.ApiResponseFactory;
 import com.comeon.study.member.dto.MemberLoginRequest;
 import com.comeon.study.member.dto.MemberLoginResponse;
 import com.comeon.study.member.dto.ReIssuanceTokenResponse;
@@ -32,7 +32,7 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<String>> signIn(
+    public ResponseEntity<ApiSuccessResponse<String>> signIn(
             @Valid @RequestBody MemberLoginRequest memberLoginRequest,
             HttpServletResponse response) {
 
@@ -43,12 +43,12 @@ public class AuthController {
                 jwtTokenProvider.getRefreshTokenExpirationTime());
         response.addHeader(SET_COOKIE, refreshTokenCookie.toString());
         return ResponseEntity.ok()
-                .body(ApiResponseCreator.createSuccessResponse(memberLoginResponse.getAccessToken()));
+                .body(ApiResponseFactory.createSuccessResponse(memberLoginResponse.getAccessToken()));
     }
 
     //TODO: 테스트코드 작성 고민
     @PostMapping("/refresh")
-    public ResponseEntity<ApiResponse<String>> reIssuanceToken(
+    public ResponseEntity<ApiSuccessResponse<String>> reIssuanceToken(
             @CookieValue(value = REFRESH_TOKEN_COOKIE_NAME, required = false) String refreshToken,
             HttpServletResponse response) {
 
@@ -60,7 +60,7 @@ public class AuthController {
                 jwtTokenProvider.getRefreshTokenExpirationTime());
         response.addHeader(SET_COOKIE, refreshTokenCookie.toString());
         return ResponseEntity.ok()
-                .body(ApiResponseCreator.createSuccessResponse(reIssuanceTokenResponse.getAccessToken()));
+                .body(ApiResponseFactory.createSuccessResponse(reIssuanceTokenResponse.getAccessToken()));
     }
 
     private ResponseCookie createRefreshTokenCookie(String refreshToken, Long expiredRefreshToken) {

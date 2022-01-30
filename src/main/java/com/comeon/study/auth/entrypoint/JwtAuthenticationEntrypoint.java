@@ -1,6 +1,6 @@
 package com.comeon.study.auth.entrypoint;
 
-import com.comeon.study.common.util.response.ApiResponseCreator;
+import com.comeon.study.common.util.response.ApiResponseFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -33,7 +33,7 @@ public class JwtAuthenticationEntrypoint implements AuthenticationEntryPoint {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
             ServletOutputStream outputStream = response.getOutputStream();
-            objectMapper.writeValue(outputStream, ApiResponseCreator.createErrorResponse(AUTHENTICATION_FAIL_MESSAGE));
+            objectMapper.writeValue(outputStream, ApiResponseFactory.createErrorResponse(AUTHENTICATION_FAIL_MESSAGE));
         } catch (IOException e) {
             log.error("jwt 비인증 응답처리 실패. 이유 : {}", e.getMessage());
         }

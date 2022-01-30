@@ -8,7 +8,7 @@ public class MemberFixture {
     public static final String MEMBER_JOIN_REQUEST_JSON = "{ \"email\" : \"email@gmail.com\"," +
             " \"nickName\" : \"닉네임\", \"password\" : \"dfeafnpe\" }";
 
-    public static final String JOINED_TEST_MEMBER_JSON = "{ \"email\" : \"test@gmail.com\"," +
+    public static final String JOINED_TEST_MEMBER_JSON = "{ \"email\" : \"test1@gmail.com\"," +
             " \"nickName\" : \"닉네임\", \"password\" : \"abcd1234\" }";
 
     public static final String INVALID_MEMBER_JOIN_REQUEST_JSON = "{ \"email\" : \"gmail.com\"," +

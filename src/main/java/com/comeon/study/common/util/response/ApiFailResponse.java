@@ -1,6 +1,5 @@
 package com.comeon.study.common.util.response;
 
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,23 +11,20 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ApiResponse<T> {
+public class ApiFailResponse {
 
-    private boolean success;
-
-    private T data;
+    private final boolean success = false;
 
     private String message;
 
-    private List<String> messages;
+    private List<String> invalidMessages;
 
     @Builder
-    public ApiResponse(boolean success, T data, String message, List<String> messages) {
-        this.success = success;
-        this.data = data;
+    public ApiFailResponse(String message, List<String> invalidMessages) {
         this.message = message;
-        this.messages = setMessages(messages);
+        this.invalidMessages = setMessages(invalidMessages);
     }
+
 
     private List<String> setMessages(List<String> messages) {
         if (!Objects.isNull(messages) && !messages.isEmpty()) {

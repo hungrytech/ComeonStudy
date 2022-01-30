@@ -5,6 +5,7 @@ import com.comeon.study.auth.refreshtoken.RefreshToken;
 public class TokenFixture {
 
     public static final String REQUEST_REFRESH_TOKEN = "refresh_token";
+    public static final String REQUEST_EXPIRED_REFRESH_TOKEN = "expired_refresh_token";
 
     public static final String RE_ISSUANCE_ACCESS_TOKEN = "re_issuance_access_token";
 

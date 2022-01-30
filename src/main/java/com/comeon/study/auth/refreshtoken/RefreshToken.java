@@ -27,7 +27,4 @@ public class RefreshToken {
         return new RefreshToken(value, expiration);
     }
 
-    public boolean isSame(String targetTokenValue) {
-        return value.equals(targetTokenValue);
-    }
 }

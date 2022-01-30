@@ -9,7 +9,9 @@ import com.comeon.study.member.domain.repository.MemberRepository;
 import com.comeon.study.member.dto.MemberLoginRequest;
 import com.comeon.study.member.dto.MemberLoginResponse;
 import com.comeon.study.member.dto.ReIssuanceTokenResponse;
+import com.comeon.study.member.exception.NotFoundOrExpiredRefreshTokenException;
 import com.comeon.study.member.exception.NotMatchLoginValueException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -113,4 +115,17 @@ public class AuthServiceTest {
                 () -> assertThat(reissuanceTokenResponse.getAccessToken()).isEqualTo(RE_ISSUANCE_ACCESS_TOKEN)
         );
     }
+
+    @DisplayName("토근 재발급 - 실패 (만료된 리프레시 토큰)")
+    @Test
+    void reIssuanceToken_fail_expired() {
+        // given
+        given(jwtTokenParser.getAuthenticatedMemberIdFromRefreshToken(anyString())).willReturn("1");
+        given(refreshTokenRepository.findById(anyString())).willReturn(Optional.empty());
+
+        // when
+        assertThatThrownBy(() -> authService.reIssuanceAccessTokenAndRefreshToken(REQUEST_EXPIRED_REFRESH_TOKEN))
+                .isInstanceOf(NotFoundOrExpiredRefreshTokenException.class);
+    }
+
 }

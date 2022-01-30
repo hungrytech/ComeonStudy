@@ -1,16 +1,16 @@
 package com.comeon.study.member.presentation;
 
+import com.comeon.study.auth.accountcontext.AccountContext;
 import com.comeon.study.common.util.response.ApiResponse;
 import com.comeon.study.common.util.response.ApiResponseCreator;
 import com.comeon.study.member.application.MemberService;
 import com.comeon.study.member.dto.MemberJoinRequest;
+import com.comeon.study.member.dto.NickNameUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -27,6 +27,16 @@ public class MemberController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponseCreator.createSuccessResponse());
+    }
+
+    @PatchMapping("/members/nick-name")
+    public ResponseEntity<ApiResponse<?>> updateNickName(
+            @AuthenticationPrincipal AccountContext accountContext,
+            @RequestBody NickNameUpdateRequest nickNameUpdateRequest) {
+        memberService.updateNickName(accountContext.getMemberId(), nickNameUpdateRequest);
+
+        return ResponseEntity.ok()
+                .body(ApiResponseCreator.createSuccessResponse(null, "닉네임이 변경되었습니다."));
     }
 
 }

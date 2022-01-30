@@ -35,4 +35,8 @@ public class Member {
         this.password = password;
         this.role = Role.ACTIVITY;
     }
+
+    public void updateNickName(NickName nickName) {
+        this.nickName = nickName;
+    }
 }

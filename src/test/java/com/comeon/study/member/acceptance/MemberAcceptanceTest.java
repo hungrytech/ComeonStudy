@@ -4,6 +4,7 @@ import com.comeon.study.common.AcceptanceTest;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -78,6 +79,28 @@ public class MemberAcceptanceTest extends AcceptanceTest {
                 .assertThat()
                 .body("success", equalTo(false))
                 .body("messages", equalTo(List.of("잘못된 이메일 양식입니다.")));
+    }
+
+    @DisplayName("닉네임 변경 - 성공")
+    @Test
+    void updateNickName() {
+
+        // given
+        given(specification)
+                .contentType(ContentType.JSON)
+                .header(HttpHeaders.AUTHORIZATION, getAccessToken())
+                .body(MEMBER_UPDATE_NICKNAME_REQUEST_JSON)
+
+                // when
+                .when()
+                .patch("/api/v1/members/nick-name")
+
+                // then
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .assertThat()
+                .body("success", equalTo(true))
+                .body("message", equalTo("닉네임이 변경되었습니다."));
     }
 
 }

@@ -24,6 +24,14 @@ public class ApiResponseCreator {
                 .build();
     }
 
+    public static <T> ApiResponse<T> createSuccessResponse(T data, String message) {
+        return ApiResponse.<T>builder()
+                .success(true)
+                .data(data)
+                .message(message)
+                .build();
+    }
+
     public static <T> ApiResponse<T> createErrorResponse(String message) {
         return ApiResponse.<T>builder()
                 .success(false)

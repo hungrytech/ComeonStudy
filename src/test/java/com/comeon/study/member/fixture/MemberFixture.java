@@ -16,9 +16,13 @@ public class MemberFixture {
 
     public static final String MEMBER_UPDATE_NICKNAME_REQUEST_JSON = "{\"nickName\": \"바뀐닉네임\"}";
 
-    public static final String LOGIN_REQUEST_JSON = "{ \"email\" : \"test@gmail.com\", \"password\" : \"abcd1234\" }";
+    public static final String LOGIN_MEMBER_1_REQUEST_JSON = "{ \"email\" : \"test1@gmail.com\", \"password\" : \"abcd1234\" }";
+    public static final String LOGIN_MEMBER_2_REQUEST_JSON = "{ \"email\" : \"test2@gmail.com\", \"password\" : \"abcd1234\" }";
     public static final String LOGIN_PASSWORD_FAILED_MEMBER_REQUEST_JSON = "{ \"email\" : \"test@gmail.com\", \"password\" : \"failedPassword\" }";
     public static final String LOGIN_ID_FAILED_MEMBER_REQUEST_JSON = "{ \"email\" : \"faild@gmail.com\", \"password\" : \"abcd1234\" }";
+
+    public static final Long TEST_MEMBER_PK_1 = 1L;
+    public static final Long TEST_MEMBER_PK_2 = 2L;
 
     public static final String TEST_EMAIL = "email@gmail.com";
     public static final String TEST_NICKNAME = "닉네임";
@@ -29,6 +33,9 @@ public class MemberFixture {
     public static final String TEST_MEMBER_LOGIN_NICKNAME = "테스터1";
 
     public static final Member MEMBER = new Member("email@gmail.com", NickName.of("닉네임"), "dfadfe2fdfoen");
-    public static final Member TEST_LOGIN_MEMBER = new Member(
+    public static final Member TEST_LOGIN_MEMBER_1 = new Member(
             "test@gmail.com", NickName.of("테스터1"), "abcd1234");
+
+    public static final Member TEST_LOGIN_MEMBER_2 = new Member(
+            "test2@gmail.com", NickName.of("테스터2"), "abcd1234");
 }

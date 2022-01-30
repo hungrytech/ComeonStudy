@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.restdocs.payload.JsonFieldType;
 
 import static com.comeon.study.member.fixture.MemberFixture.*;
 import static io.restassured.RestAssured.given;
@@ -22,7 +23,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
         //given
         given(specification)
                 .contentType(ContentType.JSON)
-                .body(LOGIN_REQUEST_JSON)
+                .body(LOGIN_MEMBER_1_REQUEST_JSON)
                 .filter(document("login", requestFields(
                         fieldWithPath("email").description("이메일"),
                         fieldWithPath("password").description("비밀번호")
@@ -30,8 +31,8 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 .filter(document("login", responseFields(
                         fieldWithPath("success").description("api 성공여부"),
                         fieldWithPath("data").description("accessToken"),
-                        fieldWithPath("message").description("에러메세지"),
-                        fieldWithPath("messages").description("유효성검사 에러 메시지")
+                        fieldWithPath("message").type(JsonFieldType.NULL).description("에러메세지").optional(),
+                        fieldWithPath("messages").type(JsonFieldType.NULL).description("유효성검사 에러 메시지").optional()
                 )))
 
         // when

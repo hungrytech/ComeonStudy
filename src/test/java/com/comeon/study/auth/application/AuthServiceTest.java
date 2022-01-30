@@ -1,6 +1,5 @@
 package com.comeon.study.auth.application;
 
-import com.comeon.study.auth.application.AuthService;
 import com.comeon.study.auth.jwt.JwtTokenParser;
 import com.comeon.study.auth.jwt.JwtTokenProvider;
 import com.comeon.study.auth.refreshtoken.RefreshToken;
@@ -22,9 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
 
 import static com.comeon.study.member.fixture.MemberFixture.*;
-import static com.comeon.study.member.fixture.MemberFixture.TEST_LOGIN_MEMBER;
 import static com.comeon.study.member.fixture.TokenFixture.*;
-import static com.comeon.study.member.fixture.TokenFixture.RE_ISSUANCE_ACCESS_TOKEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -57,7 +54,7 @@ public class AuthServiceTest {
     void login() {
         // given
         MemberLoginRequest memberLoginRequest = new MemberLoginRequest(TEST_MEMBER_LOGIN_EMAIL, TEST_MEMBER_LOGIN_PASSWORD);
-        given(memberRepository.findMemberByEmail(anyString())).willReturn(Optional.of(TEST_LOGIN_MEMBER));
+        given(memberRepository.findMemberByEmail(anyString())).willReturn(Optional.of(TEST_LOGIN_MEMBER_1));
         given(jwtTokenProvider.generateAccessToken(any())).willReturn(TEST_ACCESS_TOKEN);
         given(passwordEncoder.matches(anyString(), anyString())).willReturn(true);
         given(refreshTokenRepository.save(any(RefreshToken.class))).willReturn(TEST_REFRESH_TOKEN);
@@ -90,7 +87,7 @@ public class AuthServiceTest {
     void login_fail_not_match_password() {
         // given
         MemberLoginRequest memberLoginRequest = new MemberLoginRequest(TEST_MEMBER_LOGIN_EMAIL, TEST_MEMBER_LOGIN_PASSWORD);
-        given(memberRepository.findMemberByEmail(anyString())).willReturn(Optional.of(TEST_LOGIN_MEMBER));
+        given(memberRepository.findMemberByEmail(anyString())).willReturn(Optional.of(TEST_LOGIN_MEMBER_1));
         given(passwordEncoder.matches(anyString(), anyString())).willReturn(false);
 
         // when

@@ -11,7 +11,6 @@ import com.comeon.study.member.dto.MemberLoginResponse;
 import com.comeon.study.member.dto.ReIssuanceTokenResponse;
 import com.comeon.study.member.exception.NotFoundOrExpiredRefreshTokenException;
 import com.comeon.study.member.exception.NotMatchLoginValueException;
-import com.comeon.study.member.exception.NotMatchRefreshTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -55,11 +54,6 @@ public class AuthService {
 
         RefreshToken existingRefreshToken = refreshTokenRepository.findById(refreshToken)
                 .orElseThrow(NotFoundOrExpiredRefreshTokenException::new);
-
-        //같냐?
-        if (!existingRefreshToken.isSame(refreshToken)) {
-            throw new NotMatchRefreshTokenException();
-        }
 
         refreshTokenRepository.delete(existingRefreshToken);
 

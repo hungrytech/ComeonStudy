@@ -46,7 +46,7 @@ public class AcceptanceTest {
     protected RestDocumentationFilter getDefaultSuccessResponseDocument(String identifier) {
         return document(identifier, responseFields(
                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("api 성공여부"),
-                fieldWithPath("data").description("api 호출 결과 데이터").optional(),
+                fieldWithPath("data").type(JsonFieldType.OBJECT).description("api 호출 결과 데이터").optional(),
                 fieldWithPath("message").type(JsonFieldType.NULL).description("성공시 전달 메세지").optional()
         ));
     }

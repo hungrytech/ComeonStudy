@@ -1,6 +1,7 @@
 package com.comeon.study.member.domain.repository;
 
 import com.comeon.study.member.domain.Member;
+import com.comeon.study.member.domain.nickname.NickName;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,18 +54,5 @@ class MemberRepositoryTest {
 
         // then
         assertThat(member.getEmail()).isEqualTo(email);
-    }
-
-    @DisplayName("회원가입 - 실패 (잘못된 양식의 이메일 입력)")
-    @Test
-    void join_fail_invalid_email() {
-        // given
-        String email = "test2@naver.com";
-
-        // when
-        Optional<Member> memberOptional = memberRepository.findMemberByEmail(email);
-
-        //then
-        assertThat(memberOptional.isPresent()).isFalse();
     }
 }

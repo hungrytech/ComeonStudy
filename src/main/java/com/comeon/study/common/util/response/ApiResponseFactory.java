@@ -10,9 +10,16 @@ public class ApiResponseFactory {
         throw new NotInstanceException();
     }
 
-    public static ApiSuccessResponse<?> createSuccessResponse() {
+    public static ApiSuccessResponse<?> createSuccessResponseWithEmptyData() {
         return ApiSuccessResponse.builder()
                 .data(null)
+                .build();
+    }
+
+    public static ApiSuccessResponse<?> createSuccessResponseWithEmptyData(String message) {
+        return ApiSuccessResponse.builder()
+                .data(null)
+                .message(message)
                 .build();
     }
 

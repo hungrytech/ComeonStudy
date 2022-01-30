@@ -26,7 +26,7 @@ public class MemberController {
         memberService.join(memberJoinRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponseFactory.createSuccessResponse());
+                .body(ApiResponseFactory.createSuccessResponseWithEmptyData());
     }
 
     @PatchMapping("/members/nick-name")
@@ -36,7 +36,7 @@ public class MemberController {
         memberService.updateNickName(accountContext.getMemberId(), nickNameUpdateRequest);
 
         return ResponseEntity.ok()
-                .body(ApiResponseFactory.createSuccessResponse(null, "닉네임이 변경되었습니다."));
+                .body(ApiResponseFactory.createSuccessResponseWithEmptyData("닉네임이 변경되었습니다."));
     }
 
 }

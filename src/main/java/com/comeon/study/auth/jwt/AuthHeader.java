@@ -1,4 +1,4 @@
-package com.comeon.study.common.config.security.jwt;
+package com.comeon.study.auth.jwt;
 
 public final class AuthHeader {
 

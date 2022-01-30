@@ -1,6 +1,6 @@
 package com.comeon.study.member.presentation;
 
-import com.comeon.study.common.config.security.jwt.JwtTokenProvider;
+import com.comeon.study.auth.jwt.JwtTokenProvider;
 import com.comeon.study.common.util.response.ApiResponse;
 import com.comeon.study.common.util.response.ApiResponseCreator;
 import com.comeon.study.member.application.MemberService;

@@ -1,4 +1,4 @@
-package com.comeon.study.common.config.security.accountcontext;
+package com.comeon.study.auth.accountcontext;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;

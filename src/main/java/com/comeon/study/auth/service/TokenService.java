@@ -1,9 +1,9 @@
-package com.comeon.study.common.config.security.service;
+package com.comeon.study.auth.service;
 
-import com.comeon.study.common.config.security.jwt.JwtTokenParser;
-import com.comeon.study.common.config.security.jwt.JwtTokenProvider;
-import com.comeon.study.common.config.security.refreshtoken.repository.RefreshTokenRepository;
-import com.comeon.study.common.config.security.service.dto.response.RefreshAndAccessTokenResponse;
+import com.comeon.study.auth.jwt.JwtTokenParser;
+import com.comeon.study.auth.jwt.JwtTokenProvider;
+import com.comeon.study.auth.refreshtoken.repository.RefreshTokenRepository;
+import com.comeon.study.auth.service.dto.response.RefreshAndAccessTokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

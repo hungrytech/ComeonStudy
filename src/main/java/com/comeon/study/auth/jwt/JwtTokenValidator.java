@@ -1,4 +1,4 @@
-package com.comeon.study.common.config.security.jwt;
+package com.comeon.study.auth.jwt;
 
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;

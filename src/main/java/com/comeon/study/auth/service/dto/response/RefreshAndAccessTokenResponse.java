@@ -1,4 +1,4 @@
-package com.comeon.study.common.config.security.service.dto.response;
+package com.comeon.study.auth.service.dto.response;
 
 import lombok.AccessLevel;
 import lombok.Getter;

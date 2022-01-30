@@ -1,10 +1,10 @@
 package com.comeon.study.common.config.security;
 
-import com.comeon.study.common.config.security.entrypoint.JwtAuthenticationEntrypoint;
-import com.comeon.study.common.config.security.filter.JwtAuthenticationFilter;
-import com.comeon.study.common.config.security.jwt.JwtTokenParser;
-import com.comeon.study.common.config.security.jwt.JwtTokenValidator;
-import com.comeon.study.common.config.security.service.JwtUserDetailService;
+import com.comeon.study.auth.entrypoint.JwtAuthenticationEntrypoint;
+import com.comeon.study.auth.filter.JwtAuthenticationFilter;
+import com.comeon.study.auth.jwt.JwtTokenParser;
+import com.comeon.study.auth.jwt.JwtTokenValidator;
+import com.comeon.study.auth.service.JwtUserDetailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

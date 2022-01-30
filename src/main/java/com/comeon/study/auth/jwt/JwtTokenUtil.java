@@ -1,4 +1,4 @@
-package com.comeon.study.common.config.security.jwt;
+package com.comeon.study.auth.jwt;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

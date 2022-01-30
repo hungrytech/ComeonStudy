@@ -1,4 +1,4 @@
-package com.comeon.study.common.config.security.entrypoint;
+package com.comeon.study.auth.entrypoint;
 
 import com.comeon.study.common.util.response.ApiResponseCreator;
 import com.fasterxml.jackson.databind.ObjectMapper;

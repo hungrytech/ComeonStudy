@@ -1,4 +1,4 @@
-package com.comeon.study.auth.service;
+package com.comeon.study.auth.application;
 
 import com.comeon.study.auth.accountcontext.AccountContext;
 import com.comeon.study.member.domain.Member;

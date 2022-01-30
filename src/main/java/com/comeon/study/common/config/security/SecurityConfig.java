@@ -4,7 +4,7 @@ import com.comeon.study.auth.entrypoint.JwtAuthenticationEntrypoint;
 import com.comeon.study.auth.filter.JwtAuthenticationFilter;
 import com.comeon.study.auth.jwt.JwtTokenParser;
 import com.comeon.study.auth.jwt.JwtTokenValidator;
-import com.comeon.study.auth.service.JwtUserDetailService;
+import com.comeon.study.auth.application.JwtUserDetailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -3,7 +3,7 @@ package com.comeon.study.auth.filter;
 import com.comeon.study.auth.jwt.AuthHeader;
 import com.comeon.study.auth.jwt.JwtTokenParser;
 import com.comeon.study.auth.jwt.JwtTokenValidator;
-import com.comeon.study.auth.service.JwtUserDetailService;
+import com.comeon.study.auth.application.JwtUserDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

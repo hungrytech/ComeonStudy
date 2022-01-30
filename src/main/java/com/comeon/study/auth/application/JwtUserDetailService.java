@@ -20,8 +20,8 @@ public class JwtUserDetailService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findById(Long.parseLong(username))
+    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
+        Member member = memberRepository.findById(Long.parseLong(memberId))
                 .orElseThrow(NotFoundMemberException::new);
 
         return new AccountContext(

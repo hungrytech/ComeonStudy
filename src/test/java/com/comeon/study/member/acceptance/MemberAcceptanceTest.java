@@ -2,6 +2,7 @@ package com.comeon.study.member.acceptance;
 
 import com.comeon.study.common.AcceptanceTest;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
@@ -16,8 +17,9 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 public class MemberAcceptanceTest extends AcceptanceTest {
 
+    @DisplayName("회원가입 - 성공")
     @Test
-    void 회원가입_성공() {
+    void join() {
         // given
         given(specification)
                 .contentType(ContentType.JSON)
@@ -38,8 +40,9 @@ public class MemberAcceptanceTest extends AcceptanceTest {
                 .statusCode(HttpStatus.CREATED.value());
     }
 
+    @DisplayName("회원가입 - 실패 (이미 회원인 경우)")
     @Test
-    void 회원가입_실패_이미_회원인_경우() {
+    void join_fail_existing_member() {
         // given
         given(specification)
                 .contentType(ContentType.JSON)
@@ -57,8 +60,9 @@ public class MemberAcceptanceTest extends AcceptanceTest {
                 .body("message", equalTo("이미 가입된 회원입니다."));
     }
 
+    @DisplayName("회원가입 - 실패 (잘못된 양식의 이메일 입력)")
     @Test
-    void 회원가입_실패_잘못된_이메일_입력시() {
+    void join_fail_invalid_email() {
         // given
         given(specification)
                 .contentType(ContentType.JSON)

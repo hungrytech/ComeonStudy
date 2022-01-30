@@ -1,12 +1,9 @@
 package com.comeon.study.member.application;
 
-import com.comeon.study.auth.jwt.JwtTokenParser;
-import com.comeon.study.auth.jwt.JwtTokenProvider;
-import com.comeon.study.auth.refreshtoken.repository.RefreshTokenRepository;
 import com.comeon.study.member.domain.repository.MemberRepository;
 import com.comeon.study.member.dto.MemberJoinRequest;
 import com.comeon.study.member.exception.ExistingMemberException;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,14 +23,12 @@ class MemberServiceTest {
     @Mock
     private MemberRepository memberRepository;
 
-    @Mock
-    private PasswordEncoder passwordEncoder;
-
     @InjectMocks
     private MemberService memberService;
 
+    @DisplayName("회원가입 - 실패 (이미 회원인 경우)")
     @Test
-    void 회원가입_실패_이미_회원인_경우_예외가_발생한다() {
+    void join_fail_existing_member() {
         // given
         MemberJoinRequest memberJoinRequest = MemberJoinRequest.builder()
                 .email(TEST_MEMBER_LOGIN_EMAIL)

@@ -52,8 +52,9 @@ public class AuthServiceTest {
     @InjectMocks
     private AuthService authService;
 
+    @DisplayName("로그인 - 성공")
     @Test
-    void 로그인_성공() {
+    void login() {
         // given
         MemberLoginRequest memberLoginRequest = new MemberLoginRequest(TEST_MEMBER_LOGIN_EMAIL, TEST_MEMBER_LOGIN_PASSWORD);
         given(memberRepository.findMemberByEmail(anyString())).willReturn(Optional.of(TEST_LOGIN_MEMBER));
@@ -71,8 +72,9 @@ public class AuthServiceTest {
         );
     }
 
+    @DisplayName("로그인 - 실패 (이메일과 일치하는 회원이 없을 경우)")
     @Test
-    void 로그인_실패_찾는_회원이_없는경우() {
+    void login_fail_not_match_email() {
         // given
         MemberLoginRequest memberLoginRequest = new MemberLoginRequest(TEST_MEMBER_LOGIN_EMAIL, TEST_MEMBER_LOGIN_PASSWORD);
         given(memberRepository.findMemberByEmail(anyString())).willReturn(Optional.empty());
@@ -83,8 +85,9 @@ public class AuthServiceTest {
 
     }
 
+    @DisplayName("로그인 - 실패 (비밀번호가 다를경우)")
     @Test
-    void 로그인_실패_비밀번호가_다를경우() {
+    void login_fail_not_match_password() {
         // given
         MemberLoginRequest memberLoginRequest = new MemberLoginRequest(TEST_MEMBER_LOGIN_EMAIL, TEST_MEMBER_LOGIN_PASSWORD);
         given(memberRepository.findMemberByEmail(anyString())).willReturn(Optional.of(TEST_LOGIN_MEMBER));
@@ -95,8 +98,9 @@ public class AuthServiceTest {
                 .isInstanceOf(NotMatchLoginValueException.class);
     }
 
+    @DisplayName("토큰 재발급 - 성공")
     @Test
-    void 토큰_재발급() {
+    void reIssuanceToken() {
         // given
         given(jwtTokenParser.getAuthenticatedMemberIdFromRefreshToken(anyString())).willReturn("1");
         given(refreshTokenRepository.findById(anyString())).willReturn(Optional.of(TEST_REFRESH_TOKEN));

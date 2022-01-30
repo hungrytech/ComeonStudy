@@ -20,8 +20,9 @@ class MemberRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
 
+    @DisplayName("회원가입 - 성공")
     @Test
-    void 회원가입_성공() {
+    void join() {
         // given
         Member member = Member.builder()
                 .email(TEST_EMAIL)
@@ -40,8 +41,9 @@ class MemberRepositoryTest {
         );
     }
 
+    @DisplayName("회원가입 - 실패 (이미 회원인 경우)")
     @Test
-    void 회원이메일을_이용한_회원찾기_성공() {
+    void join_fail_existing_member() {
         // given
         String email = TEST_MEMBER_LOGIN_EMAIL;
 
@@ -53,9 +55,9 @@ class MemberRepositoryTest {
         assertThat(member.getEmail()).isEqualTo(email);
     }
 
-    @DisplayName("이메일이 알맞은 회원이 없는경우")
+    @DisplayName("회원가입 - 실패 (잘못된 양식의 이메일 입력)")
     @Test
-    void 회원이메일_이용한_로그인_실패_찾는_회원이_없는_경우() {
+    void join_fail_invalid_email() {
         // given
         String email = "test2@naver.com";
 

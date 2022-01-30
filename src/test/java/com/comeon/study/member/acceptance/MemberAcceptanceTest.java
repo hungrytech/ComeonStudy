@@ -1,11 +1,9 @@
 package com.comeon.study.member.acceptance;
 
 import com.comeon.study.common.AcceptanceTest;
-import com.comeon.study.common.accetancetool.LoginMemberTool;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -19,9 +17,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 public class MemberAcceptanceTest extends AcceptanceTest {
-
-    @Autowired
-    private LoginMemberTool loginMemberTool;
 
     @DisplayName("회원가입 - 성공")
     @Test

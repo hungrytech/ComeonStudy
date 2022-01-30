@@ -1,10 +1,12 @@
 package com.comeon.study.common;
 
+import com.comeon.study.common.accetancetool.LoginMemberTool;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -31,6 +33,9 @@ public class AcceptanceTest {
 
     @LocalServerPort
     protected int port;
+
+    @Autowired
+    protected LoginMemberTool loginMemberTool;
 
     protected RequestSpecification specification;
 

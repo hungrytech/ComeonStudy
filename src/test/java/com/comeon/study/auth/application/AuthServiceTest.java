@@ -1,4 +1,4 @@
-package com.comeon.study.member.application;
+package com.comeon.study.auth.application;
 
 import com.comeon.study.auth.application.AuthService;
 import com.comeon.study.auth.jwt.JwtTokenParser;

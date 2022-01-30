@@ -3,13 +3,15 @@ package com.comeon.study.member.application;
 import com.comeon.study.member.domain.repository.MemberRepository;
 import com.comeon.study.member.dto.MemberJoinRequest;
 import com.comeon.study.member.exception.ExistingMemberException;
+import com.comeon.study.member.exception.InvalidNickNameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -40,6 +42,24 @@ class MemberServiceTest {
 
         // when
         assertThatThrownBy(() -> memberService.join(memberJoinRequest)).isInstanceOf(ExistingMemberException.class);
+
+    }
+
+    @DisplayName("회원가입 - 실패 (잘못된 닉네임일 경우)")
+    @ParameterizedTest
+    @ValueSource(strings = {"", "nickNameLengthOverTen"})
+    void join_fail_invalid_nickName(String invalidNickName) {
+        // given
+        MemberJoinRequest memberJoinRequest = MemberJoinRequest.builder()
+                .email(TEST_MEMBER_LOGIN_EMAIL)
+                .nickName(invalidNickName)
+                .password(TEST_MEMBER_LOGIN_PASSWORD)
+                .build();
+
+        given(memberRepository.findMemberByEmail(TEST_MEMBER_LOGIN_EMAIL)).willReturn(Optional.empty());
+
+        // when
+        assertThatThrownBy(() -> memberService.join(memberJoinRequest)).isInstanceOf(InvalidNickNameException.class);
 
     }
 }

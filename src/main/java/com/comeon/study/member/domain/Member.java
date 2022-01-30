@@ -1,5 +1,6 @@
 package com.comeon.study.member.domain;
 
+import com.comeon.study.member.domain.nickname.NickName;
 import com.comeon.study.member.domain.role.Role;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -19,7 +20,8 @@ public class Member {
 
     private String email;
 
-    private String nickName;
+    @Embedded
+    private NickName nickName;
 
     private String password;
 
@@ -27,7 +29,7 @@ public class Member {
     private Role role;
 
     @Builder
-    public Member(String email, String nickName, String password) {
+    public Member(String email, NickName nickName, String password) {
         this.email = email;
         this.nickName = nickName;
         this.password = password;

@@ -27,7 +27,7 @@ class MemberRepositoryTest {
         // given
         Member member = Member.builder()
                 .email(TEST_EMAIL)
-                .nickName(TEST_NICKNAME)
+                .nickName(NickName.of(TEST_NICKNAME))
                 .password(TEST_PASSWORD)
                 .build();
 

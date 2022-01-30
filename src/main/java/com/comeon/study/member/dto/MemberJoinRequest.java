@@ -1,6 +1,7 @@
 package com.comeon.study.member.dto;
 
 import com.comeon.study.member.domain.Member;
+import com.comeon.study.member.domain.nickname.NickName;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class MemberJoinRequest {
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .email(email)
-                .nickName(nickName)
+                .nickName(NickName.of(nickName))
                 .password(passwordEncoder.encode(password))
                 .build();
     }

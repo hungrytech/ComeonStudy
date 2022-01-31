@@ -30,6 +30,7 @@ public class MemberService {
         memberRepository.save(memberJoinRequest.toMember(passwordEncoder));
     }
 
+    @Transactional
     public void updateNickName(Long memberId, NickNameUpdateRequest nickNameUpdateRequest) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(NotFoundMemberException::new);

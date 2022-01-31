@@ -13,6 +13,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @RequestMapping("/api/v1")
 @RestController
@@ -23,9 +25,8 @@ public class MemberController {
 
     @PostMapping("/join")
     public ResponseEntity<ApiSuccessResponse<?>> join(@Valid @RequestBody MemberJoinRequest memberJoinRequest) {
-        memberService.join(memberJoinRequest);
-
-        return ResponseEntity.status(HttpStatus.CREATED)
+        Long savedMemberId = memberService.join(memberJoinRequest);
+        return ResponseEntity.created(URI.create("/api/v1/members/" + savedMemberId))
                 .body(ApiResponseFactory.createSuccessResponseWithEmptyData());
     }
 

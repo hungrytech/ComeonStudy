@@ -21,13 +21,14 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void join(MemberJoinRequest memberJoinRequest) {
+    public Long join(MemberJoinRequest memberJoinRequest) {
         memberRepository.findMemberByEmail(memberJoinRequest.getEmail())
                 .ifPresent(member -> {
                     throw new ExistingMemberException();
                 });
 
-        memberRepository.save(memberJoinRequest.toMember(passwordEncoder));
+        return memberRepository.save(memberJoinRequest.toMember(passwordEncoder))
+                .getId();
     }
 
     @Transactional

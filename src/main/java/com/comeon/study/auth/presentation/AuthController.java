@@ -46,7 +46,6 @@ public class AuthController {
                 .body(ApiResponseFactory.createSuccessResponse(memberLoginResponse.getAccessToken()));
     }
 
-    //TODO: 테스트코드 작성 고민
     @PostMapping("/refresh")
     public ResponseEntity<ApiSuccessResponse<String>> reIssuanceToken(
             @CookieValue(value = REFRESH_TOKEN_COOKIE_NAME, required = false) String refreshToken,

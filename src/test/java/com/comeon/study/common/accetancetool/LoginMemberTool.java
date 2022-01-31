@@ -11,14 +11,16 @@ public class LoginMemberTool {
     private static final String TEST_DOMAIN = "http://localhost:";
     private static final String LOGIN_END_POINT = "/api/v1/login";
 
+    private final HttpHeaders httpHeaders;
+
+    public LoginMemberTool(HttpHeaders httpHeaders) {
+        this.httpHeaders = httpHeaders;
+    }
 
     public String getAccessToken(int port, String loginMemberJson) {
         RestTemplate restTemplate = new RestTemplate();
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> httpEntity = new HttpEntity<>(loginMemberJson, httpHeaders);
+        HttpEntity<String> httpEntity = getHttpEntity(loginMemberJson);
 
         ResponseEntity<ApiSuccessResponse<String>> exchange = restTemplate.exchange(
                 getLoginURL(port),
@@ -27,6 +29,24 @@ public class LoginMemberTool {
         ApiSuccessResponse<String> apiSuccessResponse = exchange.getBody();
 
         return TOKEN_PREFIX + apiSuccessResponse.getData();
+    }
+
+    public String getCookieContainedRefreshToken(int port, String loginMemberJson) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpEntity<String> httpEntity = getHttpEntity(loginMemberJson);
+
+        HttpEntity<String> response = restTemplate.exchange(
+                getLoginURL(port),
+                HttpMethod.POST,
+                httpEntity, String.class);
+        HttpHeaders headers = response.getHeaders();
+
+        return headers.getFirst(HttpHeaders.SET_COOKIE);
+    }
+
+    private HttpEntity<String> getHttpEntity(String loginMemberJson) {
+        return new HttpEntity<>(loginMemberJson, httpHeaders);
     }
 
     private String getLoginURL(int port) {

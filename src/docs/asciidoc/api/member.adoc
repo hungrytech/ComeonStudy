@@ -38,4 +38,19 @@ include::{snippets}/login/response-fields.adoc[]
 include::{snippets}/login/http-response.adoc[]
 
 
+=== *토큰 재발급 [post]*
+
+==== 설명
+RefreshToken으로 AccessToken과 RefreshToken을 재발급 받는다
+
+==== Request 예시
+include::{snippets}/refresh/http-request.adoc[]
+
+==== Response 필드
+include::{snippets}/refresh/response-fields.adoc[]
+
+==== Response 예시
+include::{snippets}/refresh/http-response.adoc[]
+
 '''
+

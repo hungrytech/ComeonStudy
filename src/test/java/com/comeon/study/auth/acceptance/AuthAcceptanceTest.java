@@ -84,4 +84,26 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 .body("message", equalTo("아이디 혹은 비밀번호가 잘못되었습니다."));
     }
 
+    @DisplayName("토큰 재발급 - 성공")
+    @Test
+    void reIssuanceToken() {
+        // given
+        given(specification)
+                .cookie(loginMemberTool.getCookieContainedRefreshToken(port, LOGIN_MEMBER_2_REQUEST_JSON))
+                .contentType(ContentType.JSON)
+                .filter(document("refresh"))
+                .filter(document("refresh", responseFields(
+                        fieldWithPath("success").description("api 성공여부"),
+                        fieldWithPath("data").description("accessToken"))))
+
+        // when
+                .when()
+                .post("/api/v1/refresh")
+
+        // then
+                .then()
+                .assertThat()
+                .body("success", equalTo(true))
+                .body("data", notNullValue());
+    }
 }

@@ -48,14 +48,14 @@ public class JwtTokenProvider extends JwtTokenUtil {
                 .compact();
     }
 
+    public long getRefreshTokenExpirationTime() {
+        return refreshTokenExpirationTime;
+    }
+
     private Claims createClaims(Long memberId) {
         Claims claims = Jwts.claims();
         claims.put("memberId", memberId);
 
         return claims;
-    }
-
-    public long getRefreshTokenExpirationTime() {
-        return refreshTokenExpirationTime;
     }
 }

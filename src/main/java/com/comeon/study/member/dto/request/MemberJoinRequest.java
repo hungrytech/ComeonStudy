@@ -1,4 +1,4 @@
-package com.comeon.study.member.dto;
+package com.comeon.study.member.dto.request;
 
 import com.comeon.study.member.domain.Member;
 import com.comeon.study.member.domain.nickname.NickName;

@@ -1,4 +1,4 @@
-package com.comeon.study.member.dto;
+package com.comeon.study.member.dto.response;
 
 import com.comeon.study.auth.refreshtoken.RefreshToken;
 import lombok.AccessLevel;

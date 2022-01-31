@@ -1,4 +1,4 @@
-package com.comeon.study.member.dto;
+package com.comeon.study.member.dto.response;
 
 import lombok.AccessLevel;
 import lombok.Getter;

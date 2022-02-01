@@ -2,6 +2,7 @@ package com.comeon.study.auth.presentation;
 
 import com.comeon.study.auth.application.AuthService;
 import com.comeon.study.auth.jwt.JwtTokenProvider;
+import com.comeon.study.common.util.response.ApiResponse;
 import com.comeon.study.common.util.response.ApiSuccessResponse;
 import com.comeon.study.common.util.response.ApiResponseFactory;
 import com.comeon.study.member.dto.request.MemberLoginRequest;
@@ -32,7 +33,7 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
-    public ResponseEntity<ApiSuccessResponse<String>> signIn(
+    public ResponseEntity<ApiResponse> signIn(
             @Valid @RequestBody MemberLoginRequest memberLoginRequest,
             HttpServletResponse response) {
 
@@ -47,7 +48,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<ApiSuccessResponse<String>> reIssuanceToken(
+    public ResponseEntity<ApiResponse> reIssuanceToken(
             @CookieValue(value = REFRESH_TOKEN_COOKIE_NAME, required = false) String refreshToken,
             HttpServletResponse response) {
 

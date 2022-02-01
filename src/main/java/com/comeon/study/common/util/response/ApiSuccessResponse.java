@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ApiSuccessResponse<T> {
-
-    private boolean success = true;
+public class ApiSuccessResponse<T> extends ApiResponse {
 
     private T data;
 
@@ -18,6 +16,7 @@ public class ApiSuccessResponse<T> {
 
     @Builder
     public ApiSuccessResponse(T data, String message) {
+        super(true);
         this.data = data;
         this.message = message;
     }

@@ -11,9 +11,7 @@ import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ApiFailResponse {
-
-    private final boolean success = false;
+public class ApiFailResponse extends ApiResponse {
 
     private String message;
 
@@ -21,6 +19,7 @@ public class ApiFailResponse {
 
     @Builder
     public ApiFailResponse(String message, List<String> invalidMessages) {
+        super(false);
         this.message = message;
         this.invalidMessages = setMessages(invalidMessages);
     }

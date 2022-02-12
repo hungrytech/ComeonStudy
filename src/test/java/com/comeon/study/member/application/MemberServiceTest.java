@@ -4,7 +4,7 @@ import com.comeon.study.member.domain.nickname.NickName;
 import com.comeon.study.member.domain.repository.MemberRepository;
 import com.comeon.study.member.dto.request.MemberJoinRequest;
 import com.comeon.study.member.dto.request.NickNameUpdateRequest;
-import com.comeon.study.member.exception.ExistingMemberException;
+import com.comeon.study.member.exception.AlreadySignedException;
 import com.comeon.study.member.exception.InvalidNickNameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ class MemberServiceTest {
         given(memberRepository.findMemberByEmail(TEST_MEMBER_LOGIN_EMAIL)).willReturn(Optional.of(TEST_LOGIN_MEMBER_1));
 
         // when
-        assertThatThrownBy(() -> memberService.join(memberJoinRequest)).isInstanceOf(ExistingMemberException.class);
+        assertThatThrownBy(() -> memberService.join(memberJoinRequest)).isInstanceOf(AlreadySignedException.class);
 
     }
 

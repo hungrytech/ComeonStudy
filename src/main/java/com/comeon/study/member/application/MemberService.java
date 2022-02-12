@@ -5,7 +5,7 @@ import com.comeon.study.member.domain.nickname.NickName;
 import com.comeon.study.member.domain.repository.MemberRepository;
 import com.comeon.study.member.dto.request.MemberJoinRequest;
 import com.comeon.study.member.dto.request.NickNameUpdateRequest;
-import com.comeon.study.member.exception.ExistingMemberException;
+import com.comeon.study.member.exception.AlreadySignedException;
 import com.comeon.study.member.exception.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,10 +22,9 @@ public class MemberService {
 
     @Transactional
     public Long join(MemberJoinRequest memberJoinRequest) {
-        memberRepository.findMemberByEmail(memberJoinRequest.getEmail())
-                .ifPresent(member -> {
-                    throw new ExistingMemberException();
-                });
+        if (isAlreadySigned(memberJoinRequest)) {
+            throw new AlreadySignedException();
+        }
 
         return memberRepository.save(memberJoinRequest.toMember(passwordEncoder))
                 .getId();
@@ -37,5 +36,9 @@ public class MemberService {
                 .orElseThrow(NotFoundMemberException::new);
 
         member.updateNickName(NickName.of(nickNameUpdateRequest.getNickName()));
+    }
+
+    private boolean isAlreadySigned(MemberJoinRequest memberJoinRequest) {
+        return memberRepository.findMemberByEmail(memberJoinRequest.getEmail()).isPresent();
     }
 }
